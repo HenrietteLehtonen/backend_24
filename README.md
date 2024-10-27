@@ -1,7 +1,7 @@
-# 1. Tehtävä REST API
+# 1. Tehtävä HTTP METODIT & REST API
 
-- Luodaan palvelin
-- Käytetään eri REST API metodeja
+- Luodaan palvelin, joka käsittelee HTTP pyyntöjä
+- Eri metodeja joita käytetty:
   - GET = hakee koko mock datan sisällön
   - GET ID = hakee mock datan sisällöstä itemin / id numero
   - PUT = lisää uuden itemin mock dataan
@@ -26,7 +26,7 @@
 
 ![GET ID](ss/ss2.png)
 
-### PUT
+### POST
 
 ![PUT 1](ss/4.png)
 ![PUT 2](ss/5.png)
