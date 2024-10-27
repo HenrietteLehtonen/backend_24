@@ -15,10 +15,18 @@
 
 ### Server running
 
+![Server running](ss/1.png)
+
 ### GET
 
-![Get Response](1.png)
+![GET res](ss/2.png)
+![GET](ss/3.png)
 
 ### GET ID
 
+![GET ID](ss/ss2.png)
+
 ### PUT
+
+![PUT 1](ss/4.png)
+![PUT 2](ss/5.png)
