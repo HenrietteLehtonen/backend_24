@@ -4,7 +4,7 @@
 - Eri metodeja joita käytetty:
   - GET = hakee koko mock datan sisällön
   - GET ID = hakee mock datan sisällöstä itemin / id numero
-  - PUT = lisää uuden itemin mock dataan
+  - POST = lisää uuden itemin mock dataan
 
 ## Muutokset
 
