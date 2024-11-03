@@ -48,5 +48,5 @@ Delete user
 
 ## PUG
 
-Pugilla renderöinti
+Pugilla renderöinti:
 ![pug_render.png]
