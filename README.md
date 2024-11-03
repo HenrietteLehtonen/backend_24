@@ -13,7 +13,7 @@
 ## Mitä tehty ja ongelmat
 
 - Lisätty USERS.js
-- Lisätty DELETE metodi
+- Lisätty DELETE metodi media.js ja user.js
 - PUT ei toimi
 
 ## SCREENSHOSTS
