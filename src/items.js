@@ -7,62 +7,33 @@ const items = [
 
 // GET ALL
 const getItems = (res) => {
-  res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(JSON.stringify(items));
+  // res.writeHead(200, {'Content-Type': 'application/json'});
+  // res.end(JSON.stringify(items));
+  res.json(items);
 };
 
 // GET ID
 const getID = (req, res) => {
-  const urlParts = req.url.split('/'); // // ['','items','1']
-  const idToFind = parseInt(urlParts[2]); // [0,1,2] = 1
-
-  const foundItem = items.find((item) => item.id === idToFind); // Etsi itemin id
-
-  if (foundItem) {
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(foundItem)); // Lähetä löytynyt item
+  const id = parseInt(req.params.id);
+  const item = items.find((item) => item.id === id);
+  if (item) {
+    if (req.query.format === 'plain') {
+      res.send(item.name);
+    } else {
+      res.json(item);
+    }
   } else {
-    res.writeHead(404, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify({message: 'Item not found'}));
+    res.status(404).json({message: 'Item not found'});
   }
 };
 
 // POST
 const postItem = (req, res) => {
-  // alustetaan datalle taulukko
-  let body = [];
-  req
-    // kuunnellan 'dataa' -> lisätään datan chunck / osa bodyyn (taulukkoon)
-    .on('data', (chunk) => {
-      body.push(chunk);
-    })
-    .on('end', () => {
-      // kuunnellaan 'end'
-      //  data buffer muotoinen -> yhdistetään data ja muutetaan merkkijonoksi
-      body = Buffer.concat(body).toString();
-      // bodyssa nyt request body merkkijonona
-      console.log('req body', body);
-
-      // tallennetaan bodyn data ITEM json objektiksi item muuttujaan
-
-      // TODO: check largest id in array and increment by 1
-
-      const item = JSON.parse(body);
-      //item.id = items.length + 1; // EI NÄIN
-
-      let newId = 1;
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].id > newId) {
-          newId = items[i].id;
-        }
-      }
-      item.id = newId + 1;
-
-      items.push(item);
-
-      res.writeHead(200, {'Content-Type': 'application/json'});
-      res.end(JSON.stringify({message: 'Added items'}));
-    });
+  console.log('post req body', req.body);
+  const newItem = req.body;
+  newItem.id = items[items.length - 1].id + 1;
+  items.push(newItem);
+  res.status(201).json({message: 'Item added', id: '0'});
 };
 
 export {getItems, getID, postItem};

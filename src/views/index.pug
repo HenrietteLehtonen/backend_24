@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= title
+  body
+    h1= title
+    p Welcome to my server from PUG!
+    p Simppeli REST API Expressillä ja PUGilla
+    p PUGilla server puolen renderöinti
+    p Mediatiedostoja voidaan hakea GET, POST ja PUT komennoilla <br> Pelvelin käsittelee pyyntöjä: <br>GET hakee kaikki mediatiedot, PUT metodilla voidaan lisätä<br> POST metodilla voidaan muokata tiettyä mediaa (ei toimi)
+    p= message
+    div 
+        ul
+            each item in esimData 
+                li= item.title

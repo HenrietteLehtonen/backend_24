@@ -1,32 +1,52 @@
-# 1. Tehtävä HTTP METODIT & REST API
+# 2. EXPRESS JA PUG
 
 - Luodaan palvelin, joka käsittelee HTTP pyyntöjä
 - Eri metodeja joita käytetty:
+
   - GET = hakee koko mock datan sisällön
   - GET ID = hakee mock datan sisällöstä itemin / id numero
-  - POST = lisää uuden itemin mock dataan
+  - POST = lisää uuden median / käyttäjän
+  - DELETE = poistaa median / käyttäjän tietyllä ID:llä
 
-## Muutokset
+- PUGilla renderöidään index
 
-- Korjattu tunnin TODO: check largest id in array and increment by 1 siistimmäksi
-- Lisätty GET ID metodi
+## Mitä tehty ja ongelmat
+
+- Lisätty USERS.js
+- Lisätty DELETE metodi
+- PUT ei toimi
 
 ## SCREENSHOSTS
 
-### Server running
-
-![Server running](ss/1.png)
-
 ### GET
 
-![GET res](ss/2.png)
-![GET](ss/3.png)
+Get media:
+![get_all.png]
+![get_id.png]
 
-### GET ID
-
-![GET ID](ss/ss2.png)
+Get user:
+![get_users.png]
+![get_user.png]
 
 ### POST
 
-![PUT 1](ss/4.png)
-![PUT 2](ss/5.png)
+Post media:
+![post_media.png]
+
+Post user:
+![new_user1.png]
+![new_user2.png]
+
+### DELETE
+
+Delete media:
+![del_media.png]
+
+Delete user
+![del_user.png]
+![after_del.png]
+
+## PUG
+
+Pugilla renderöinti
+![pug_render.png]

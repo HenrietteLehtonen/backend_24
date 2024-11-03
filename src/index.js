@@ -1,37 +1,90 @@
-import http from 'http';
-import {getItems, getID, postItem} from './items.js';
+// EXPRESS SERVER
+import express from 'express';
+import {
+  getItems,
+  getID,
+  postItem,
+  mediaItems,
+  putItem,
+  deleteMedia,
+} from './media.js';
+import {getUserID, getUsers, addUser, delUser} from './user.js';
 const hostname = '127.0.0.1';
+const app = express();
 const port = 3000;
-// http://localhost:3000/items
+// http://localhost:3000/api/media
 
-// luodaan palvelin
-// callback funktio -> odottaa että kutsutaan
-const server = http.createServer((req, res) => {
-  // tarkastetaan url ja metodi
-  const {url, method} = req;
-  console.log('url:', url, 'method:', method);
+// set pystytään tehdä asetuksia
+app.set('view engine', 'pug');
+app.set('views', 'src/views');
 
-  // jos on GET
-  if (url === '/items' && method === 'GET') {
-    getItems(res);
+// JSON PARSIMINEN
+app.use(express.json());
 
-    // GET ID
-  } else if (url === '/items/2' && method === 'GET') {
-    getID(req, res);
+// app.use() -> käytä sulkujen sisällä olevaa metodia
+// "palvelee" staattisia tiedostoja public kansiosta (html, css,kuvat, jne)
+// pääsee localhost:3000/index.html tai cat3.jpg
+app.use(express.static('public'));
 
-    // jos on POST
-  } else if (url === '/items' && method === 'POST') {
-    postItem(req, res);
+// Uploaded media files
+// hakee mediakansiosta -> media mockdata
+app.use('/media', express.static('media'));
 
-    // ei löydy
-  } else {
-    //  not found response
-    res.writeHead(404, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify({error: '404', message: 'not found'}));
-  }
+// API documentation with pug
+app.get('/api', (req, res) => {
+  // res.render('<h1>Api DOC</h1>');
+  // rendaa index.pug
+  res.render('index', {
+    title: 'API PUG documentation',
+    message: 'Hello from index.js row 31',
+    esimData: mediaItems,
+  });
 });
 
-// serverin metodi 3 parametrilla, port, hostname, funktio mikä ajetaan)
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+// HAKU METODIT MEDIA
+
+// Käytetään media endpoint
+app.get('/api/media', (req, res) => {
+  getItems(res);
+});
+
+app.get('/api/media/:id', (req, res) => {
+  // console.log('req.params', req.params);
+  // res.send('ok');
+  getID(req, res);
+});
+
+app.post('/api/media', (req, res) => {
+  postItem(req, res);
+});
+
+app.put('/api/media/:id', (req, res) => {
+  putItem(req, res);
+});
+app.delete('/api/media/:id', (req, res) => {
+  deleteMedia(req, res);
+});
+
+// USERS
+app.get('/api/user', (req, res) => {
+  getUsers(res);
+});
+
+// USERS ID
+app.get('/api/user/:id', (req, res) => {
+  getUserID(req, res);
+});
+
+// ADD USER
+app.post('/api/user', (req, res) => {
+  addUser(req, res);
+});
+
+// DELETE USER
+app.delete('/api/user/:id', (req, res) => {
+  delUser(req, res);
+});
+
+app.listen(port, hostname, () => {
+  console.log(`Express server running at http://${hostname}:${port}/`);
 });
