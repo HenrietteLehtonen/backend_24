@@ -1,4 +1,4 @@
-# 2. EXPRESS JA PUG
+# MediaSharing REST API application
 
 - Luodaan palvelin, joka käsittelee HTTP pyyntöjä
 - Eri metodeja joita käytetty:
@@ -9,6 +9,14 @@
   - DELETE = poistaa median / käyttäjän tietyllä ID:llä
 
 - PUGilla renderöidään index
+
+## Asennus
+
+1. Clone
+2. Aja `npm install`
+3. Luo database
+4. Luo .env filu
+5. Asenna dotenv
 
 ## Mitä tehty ja ongelmat
 

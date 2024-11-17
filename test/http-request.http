@@ -2,33 +2,38 @@
 
 ## Media resource
 
-###  GET ALL  ITEMS
+###  GET ALL MEDIA ITEMS
 GET http://localhost:3000/api/media
 
 ### GET ID
 GET http://localhost:3000/api/media/9590?format=json
 
 ### GET ID
-GET http://localhost:3000/api/media/9590
+GET http://localhost:3000/api/media/2
 
 
-### CREATE NEW ITEM
 
+### POST  Create an item
 POST http://localhost:3000/api/media
-Content-Type: application/json
+Content-Type: multipart/form-data; boundary=----Boundary
 
-{
-    "filename": "lisätty_kuva.jpg",
-    "filesize": 887574,
-    "title": "Uusi kuva",
-    "description": "Lisätty kuva",
-    "user_id": 1606,
-    "media_type": "image/jpeg",
-    "created_at": "2023-10-16T19:00:09.000Z"
-  }
+------Boundary
+Content-Disposition: form-data; name="title"
 
-### DELETE
-DELETE http://localhost:3000/api/media/9632  
+New cat image
+------Boundary
+Content-Disposition: form-data; name="user_id"
+
+1
+------Boundary
+Content-Disposition: form-data; name="file"; filename="image.jpg"
+Content-Type: image/png
+
+< ./cat2.png
+------Boundary--
+
+### DELETE todo
+DELETE http://localhost:3000/api/media/1  
 
 ### MODIFY ITEM -- ei toimi
 
@@ -65,3 +70,22 @@ Content-Type: application/json
 ### DELETE USER
 
 DELETE http://localhost:3000/api/user/305
+
+
+
+
+
+### CREATE NEW MEDIA ITEM
+
+POST http://localhost:3000/api/media
+Content-Type: application/json
+
+{
+    "filename": "lisätty_katti.jpg",
+    "filesize": 887574,
+    "title": "Uusi kissa",
+    "description": "Lisätty kissakuva",
+    "user_id": 1606,
+    "media_type": "image/jpeg",
+    "created_at": "2023-10-16T19:00:09.000Z"
+  }

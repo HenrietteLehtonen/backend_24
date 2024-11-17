@@ -2,3 +2,7 @@ node_modules
 muistiinpanoja
 .vscode
 .DS_Store
+uploads/*
+# except one (empty) file to have the folder in version control
+!uploads/.gitkeep
+.env

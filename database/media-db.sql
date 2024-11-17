@@ -46,6 +46,7 @@ CREATE TABLE Likes (
     like_id INT AUTO_INCREMENT PRIMARY KEY,
     media_id INT NOT NULL,
     user_id INT NOT NULL,
+    likes_count INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (media_id) REFERENCES MediaItems(media_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -75,7 +76,7 @@ CREATE TABLE MediaItemTags (
 );
 
 
--- Insert the sample data
+-- USER DATA
 
 INSERT INTO UserLevels (level_name) VALUES ('Admin'), ('User'), ('Guest');
 
@@ -85,23 +86,27 @@ INSERT INTO Users (username, password, email, user_level_id) VALUES
 ('Anon5468', 'to-be-hashed-pw3', 'anon5468@example.com', 2),
 ('AdminUser', 'to-be-hashed-pw4', 'adminuser@example.com', 1);
 
+-- MEDIAITEMS
+
 INSERT INTO MediaItems (user_id, filename, filesize, media_type, title, description) VALUES
 (1, 'sunset.jpg', 1024, 'image/jpeg', 'Sunset', 'A beautiful sunset'),
 (2, 'sample.mp4', 20480, 'video/mp4', 'Sample Video', 'A sample video file'),
 (2, 'ffd8.jpg', 2048, 'image/jpeg', 'Favorite food', null),
 (1, '2f9b.jpg', 1024, 'image/jpeg', 'Aksux and Jane', 'friends');
 
+-- DATA COMMENTS & LIKES
+
 INSERT INTO Comments (media_id, user_id, comment_text) VALUES
 (1, 2, 'This is a wonderful photo!'),
 (2, 1, 'Really nice video, thanks for sharing!');
 
-INSERT INTO Likes (media_id, user_id) VALUES
-(1, 2),
-(2, 1),
-(2, 2),
-(3, 1),
-(2, 3),
-(3, 3);
+INSERT INTO Likes (media_id, user_id, likes_count) VALUES
+(1, 2, 10),
+(2, 1, 5),
+(2, 2, 4),
+(3, 1, 20),
+(2, 3, 3),
+(3, 3, 10);
 
 INSERT INTO Ratings (media_id, user_id, rating_value) VALUES
 (1, 2, 5),
@@ -129,3 +134,35 @@ SELECT
 FROM 
     MediaItems
 GROUP BY media_type;
+
+-- Näytä "kuva" ja kuvan kommentit
+
+SELECT
+
+    MediaItems.media_id,
+    MediaItems.filename,
+    MediaItems.description,
+    MediaItems.title,
+    Comments.comment_text,
+    Comments.comment_id
+FROM 
+    MediaItems
+LEFT JOIN 
+    Comments ON MediaItems.media_id = Comments.media_id;
+    
+-- lisää tykkäykset
+
+SELECT 
+    Users.username,
+    MediaItems.media_id, 
+    MediaItems.title, 
+    Comments.comment_text,
+    Likes.likes_count
+FROM 
+    MediaItems 
+JOIN 
+    Users ON MediaItems.user_id = Users.user_id
+JOIN 
+    Comments ON MediaItems.media_id = Comments.media_id
+LEFT JOIN
+    Likes ON MediaItems.media_id = Likes.media_id;

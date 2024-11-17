@@ -1,13 +1,6 @@
 // EXPRESS SERVER
 import express from 'express';
-import {
-  getItems,
-  getID,
-  postItem,
-  mediaItems,
-  putItem,
-  deleteMedia,
-} from './media.js';
+import mediaRouter from './routes/media-router.js';
 import {getUserID, getUsers, addUser, delUser} from './user.js';
 const hostname = '127.0.0.1';
 const app = express();
@@ -18,7 +11,7 @@ const port = 3000;
 app.set('view engine', 'pug');
 app.set('views', 'src/views');
 
-// JSON PARSIMINEN
+// JSON PARSIMINEN expressillä
 app.use(express.json());
 
 // app.use() -> käytä sulkujen sisällä olevaa metodia
@@ -27,43 +20,24 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Uploaded media files
-// hakee mediakansiosta -> media mockdata
-app.use('/media', express.static('media'));
+app.use('/uploads', express.static('uploads'));
 
 // API documentation with pug
+//- http://localhost:3000/api
 app.get('/api', (req, res) => {
   // res.render('<h1>Api DOC</h1>');
   // rendaa index.pug
   res.render('index', {
     title: 'API PUG documentation',
     message: 'Hello from index.js row 31',
-    esimData: mediaItems,
+    // esimData: mediaItems,
   });
 });
 
+// MEDIA ENDPOINT ROUTER
+app.use('/api/media/', mediaRouter);
+
 // HAKU METODIT MEDIA
-
-// Käytetään media endpoint
-app.get('/api/media', (req, res) => {
-  getItems(res);
-});
-
-app.get('/api/media/:id', (req, res) => {
-  // console.log('req.params', req.params);
-  // res.send('ok');
-  getID(req, res);
-});
-
-app.post('/api/media', (req, res) => {
-  postItem(req, res);
-});
-
-app.put('/api/media/:id', (req, res) => {
-  putItem(req, res);
-});
-app.delete('/api/media/:id', (req, res) => {
-  deleteMedia(req, res);
-});
 
 // USERS
 app.get('/api/user', (req, res) => {

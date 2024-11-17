@@ -41,11 +41,11 @@ CREATE TABLE Likes (
     like_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     media_id INT NOT NULL,
     user_id INT NOT NULL,
-    likes_count INT NOT NULL,
+    likes_count INT,
     FOREIGN KEY (media_id) REFERENCES MediaItems(media_id),
     FOREIGN KEY (user_id) REFERENCES Users(user_id) 
 );
-
+-- likes_count INT NOT NULL,
 
 INSERT INTO Users VALUES (260, 'VCHar', 'secret123', 'vchar@example.com', 1, null  );
 INSERT INTO Users VALUES (305, 'Donatello', 'secret234', 'dona@example.com', 1, null);
