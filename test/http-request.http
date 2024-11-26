@@ -1,30 +1,92 @@
 ### API REQUESTS
 
+
+### USERS
+
+
+###  GET ALL USERS
+GET http://localhost:3000/api/user
+
+### GET USER ID
+GET http://localhost:3000/api/user/2
+
+
+### DELETE USER
+DELETE http://localhost:3000/api/user/5
+
+
+
+### LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "AdminUser",
+    "password": "xxyyxxyy"
+}
+
+
+### Get USER INFO
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
+
+### USER VALIDATION - auth routerin kautta
+### REGISTER - Lisää uusi käyttäjä POST
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "AdminUser",
+    "password": "xxyyxxyy",
+    "email": "admin@example.com"
+}
+
+### REGISTER fail - ei mene validoinnista läpi
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "r",
+    "password": "salla",
+    "email": "newr@example.com"
+}
+
+### LOGIN - fail
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "test"
+}
+
+
+
+
 ## Media resource
 
 ###  GET ALL MEDIA ITEMS
 GET http://localhost:3000/api/media
 
-### GET ID
-GET http://localhost:3000/api/media/9590?format=json
 
-### GET ID
+### GET media by ID
 GET http://localhost:3000/api/media/2
 
 
 
-### POST  Create an item
+### POST LISÄÄ UUS ITEMI Auth
 POST http://localhost:3000/api/media
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
 Content-Type: multipart/form-data; boundary=----Boundary
 
 ------Boundary
 Content-Disposition: form-data; name="title"
 
-New cat image
+Lisätty kuva autentikoinnilla
 ------Boundary
-Content-Disposition: form-data; name="user_id"
+Content-Disposition: form-data; name="description"
 
-1
+Poistetaan tämä kuva 
 ------Boundary
 Content-Disposition: form-data; name="file"; filename="image.jpg"
 Content-Type: image/png
@@ -32,60 +94,32 @@ Content-Type: image/png
 < ./cat2.png
 ------Boundary--
 
-### DELETE todo
-DELETE http://localhost:3000/api/media/1  
+### PUT MODIFY ITEM
 
-### MODIFY ITEM -- ei toimi
-
-PUT http://localhost:3000/api/media/9590
-Content-type: application/json
+PUT http://localhost:3000/api/media/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
 
 {
-    "title": "Basement modified",
-    "description": "Some new description",
+  "title": "NEW TITLE FROM PUT with authorization",
+  "description": "Muokataan ja poistetaan tämä kuva kohta"
 }
 
-// USERS
 
-###
+### DELETE Media Item
+DELETE http://localhost:3000/api/media/6
 
-###  GET ALL USERS
-GET http://localhost:3000/api/user
 
-### GET USER ID
-GET http://localhost:3000/api/user/305
-
-### ADD USER
-POST http://localhost:3000/api/user
-Content-Type: application/json
-
-{
-    "username": "Meikä Mandariini",
-    "password": "******",
-    "email": "mm@example.com",
-    "user_level_id": 1,
-    "created_at": "2024-11-23W06:56:41.000Z"
-}
-
-### DELETE USER
-
-DELETE http://localhost:3000/api/user/305
+### DELETE MEDIA ITEM AUTH
+DELETE http://localhost:3000/api/auth/delete/media/20
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
 
 
 
+# {
+#     "username": "JohnDoe",
+#     "password": "to-be-hashed-pw1"
+# }
 
 
-### CREATE NEW MEDIA ITEM
 
-POST http://localhost:3000/api/media
-Content-Type: application/json
-
-{
-    "filename": "lisätty_katti.jpg",
-    "filesize": 887574,
-    "title": "Uusi kissa",
-    "description": "Lisätty kissakuva",
-    "user_id": 1606,
-    "media_type": "image/jpeg",
-    "created_at": "2023-10-16T19:00:09.000Z"
-  }

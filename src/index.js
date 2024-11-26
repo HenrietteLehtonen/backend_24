@@ -1,7 +1,10 @@
 // EXPRESS SERVER
 import express from 'express';
 import mediaRouter from './routes/media-router.js';
-import {getUserID, getUsers, addUser, delUser} from './user.js';
+import authRouter from './routes/auth-router.js';
+import userRouter from './routes/user-router.js';
+// import {getUserID, addUser, delUser} from './user.js';
+import {errorHandler, notFoundHandler} from './middlewares/error-handler.js';
 const hostname = '127.0.0.1';
 const app = express();
 const port = 3000;
@@ -16,7 +19,6 @@ app.use(express.json());
 
 // app.use() -> käytä sulkujen sisällä olevaa metodia
 // "palvelee" staattisia tiedostoja public kansiosta (html, css,kuvat, jne)
-// pääsee localhost:3000/index.html tai cat3.jpg
 app.use(express.static('public'));
 
 // Uploaded media files
@@ -34,30 +36,40 @@ app.get('/api', (req, res) => {
   });
 });
 
+// USER AUTHERNTICATION ENDPOINT
+app.use('/api/auth', authRouter);
+
 // MEDIA ENDPOINT ROUTER
 app.use('/api/media/', mediaRouter);
 
-// HAKU METODIT MEDIA
+// TODO: TEE UUDET ENDPOINTIT USERLEILLE!!
+
+// USER ENDPOINT ROUTER
+app.use('/api/user', userRouter);
 
 // USERS
-app.get('/api/user', (req, res) => {
-  getUsers(res);
-});
 
 // USERS ID
-app.get('/api/user/:id', (req, res) => {
-  getUserID(req, res);
-});
+// app.get('/api/user/:id', (req, res) => {
+//   getUserID(req, res);
+// });
 
 // ADD USER
-app.post('/api/user', (req, res) => {
-  addUser(req, res);
-});
+// app.post('/api/user', (req, res) => {
+//   addUser(req, res);
+// });
 
 // DELETE USER
-app.delete('/api/user/:id', (req, res) => {
-  delUser(req, res);
-});
+// app.delete('/api/user/:id', (req, res) => {
+//   delUser(req, res);
+// });
+
+// ERROR HANDLERIT
+// notFoundHandler toimii oletusreittinä
+app.use(notFoundHandler);
+
+// geneerinen error handleri -> mikä tahansa viirrhe tapahtuu, käytetään tätä virheiden käsittelyyn
+app.use(errorHandler);
 
 app.listen(port, hostname, () => {
   console.log(`Express server running at http://${hostname}:${port}/`);

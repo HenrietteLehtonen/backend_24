@@ -4,6 +4,7 @@
 
 import promisePool from '../lib/database.js';
 
+// GET ALL MEDIA ITEMS
 const fetchMediaItems = async () => {
   // korvataan haku tietokannasta
   try {
@@ -15,6 +16,7 @@ const fetchMediaItems = async () => {
   }
 };
 
+// GET MEDIA BY MEDIA ID
 const fetchMediaItemsByID = async (id) => {
   try {
     // haetaan db
@@ -27,6 +29,7 @@ const fetchMediaItemsByID = async (id) => {
   }
 };
 
+// POST CREATE NEW ITEM
 const addMediaItem = async (newItem) => {
   const sql = `INSERT INTO MediaItems 
               (user_id, title, description, filename, filesize, media_type)
@@ -39,7 +42,6 @@ const addMediaItem = async (newItem) => {
     newItem.filesize,
     newItem.media_type,
   ];
-  // implement try - catch
   try {
     const result = await promisePool.query(sql, params);
     return result[0].insertId;
@@ -49,4 +51,35 @@ const addMediaItem = async (newItem) => {
   }
 };
 
-export {fetchMediaItems, addMediaItem, fetchMediaItemsByID};
+// Lisätty PUT
+const updateMediaItem = async (id, userId, updatedItem) => {
+  const sql = `UPDATE MediaItems SET title = ?, description = ? WHERE media_id = ? AND user_id = ?`;
+  const params = [updatedItem.title, updatedItem.description, id, userId];
+  try {
+    const result = await promisePool.query(sql, params);
+    console.log('updateMediaItem', result);
+    return result[0].affectedRows;
+  } catch (error) {
+    console.error('updateMediaItem', error.message);
+    throw new Error('Database error ' + error.message);
+  }
+};
+
+// DELETE ITEM BY ID
+const deleteMediaItembyID = async (media_id, user_id) => {
+  try {
+    const sql = `DELETE FROM MediaItems WHERE media_id = ?`;
+    const [result] = await promisePool.query(sql, [media_id, user_id]);
+    return result.affectedRows;
+  } catch (error) {
+    console.error('deleteMediaItembyID', error.message);
+  }
+};
+
+export {
+  fetchMediaItems,
+  addMediaItem,
+  fetchMediaItemsByID,
+  updateMediaItem,
+  deleteMediaItembyID,
+};
