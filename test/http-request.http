@@ -106,13 +106,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwia
 }
 
 
+### DELETE MEDIA ITEM AUTH
+DELETE http://localhost:3000/api/auth/delete/media/200
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
+
 ### DELETE Media Item
 DELETE http://localhost:3000/api/media/6
 
-
-### DELETE MEDIA ITEM AUTH
-DELETE http://localhost:3000/api/auth/delete/media/20
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
 
 
 
