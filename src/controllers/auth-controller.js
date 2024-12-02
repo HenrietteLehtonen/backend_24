@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import {selectUserbyUserName, getUserbyID} from '../models/user-model.js';
-
+import bcrypt from 'bcryptjs';
 import 'dotenv/config';
 import {customError} from '../middlewares/error-handler.js';
 import {deleteMediaItembyID} from '../models/media-model.js';
@@ -9,17 +9,21 @@ import {deleteMediaItembyID} from '../models/media-model.js';
 const postLogin = async (req, res, next) => {
   console.log('postLogin', req.body);
   const {username, password} = req.body;
-  const user = await selectUserbyUserName(username, password);
-  if (user) {
+  const user = await selectUserbyUserName(username);
+  if (!user) {
+    return next(customError(`Username not found`, 401));
+  }
+  const passwordMatch = await bcrypt.compare(password, user.password); //verrataan salasanoja -> palauttaa true/false
+  if (passwordMatch) {
     const token = jwt.sign({user_id: user.user_id}, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    res.json({...user, token});
+    // poista palautuksesta salasana
+    delete user.password;
+    return res.json({...user, token});
   } else {
     // res.sendStatus(401); korvataan error handler middlewarella
-    return next(
-      customError(`Unauthorized - username or password is invalid.`, 401),
-    );
+    return next(customError(`Password is invalid.`, 401));
   }
 };
 

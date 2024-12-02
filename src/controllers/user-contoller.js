@@ -5,6 +5,7 @@ import {
   deleteUser,
 } from '../models/user-model.js';
 import {customError} from '../middlewares/error-handler.js';
+import bcrypt from 'bcryptjs';
 
 // GET ALL USERS
 const getUsers = async (req, res) => {
@@ -16,13 +17,20 @@ const getUsers = async (req, res) => {
   }
 };
 
-// POST USER
-const postUser = async (req, res) => {
+// POST USER - lisätään käyttäjä
+const postUser = async (req, res, next) => {
+  const user = req.body; // tallennetaan useriin username,ss,email jos menee validoinnista läpi
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(user.password, salt);
+  console.log('hash', hashedPassword);
+  user.password = hashedPassword;
   try {
     const newUserId = await addUser(req.body);
     res.json({message: 'new user added', user_id: newUserId});
-  } catch {
-    res.status(503).json({error: 503, message: 'Database error'});
+  } catch (error) {
+    console.error('postUser', error.message);
+    // res.status(503).json({error: 503, message: 'Database error'});
+    return next(customError(error.message, 503));
   }
 };
 

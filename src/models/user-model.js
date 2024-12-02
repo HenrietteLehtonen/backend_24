@@ -60,11 +60,11 @@ const deleteUser = async (user_id) => {
 };
 
 // KIRJAUTUMINEN
-const selectUserbyUserName = async (username, password) => {
+const selectUserbyUserName = async (username) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT user_id, username, email, user_level_id FROM Users WHERE username = ? AND password = ?',
-      [username, password],
+      'SELECT user_id, username, password, email, user_level_id FROM Users WHERE username = ?',
+      [username],
     );
     return rows[0];
   } catch (error) {
