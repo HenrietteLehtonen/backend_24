@@ -35,9 +35,9 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "UusiKäyttäjä",
-    "password": "xxxxxxx",
-    "email": "useruusi@example.com"
+    "username": "UserNew",
+    "password": "salasana",
+    "email": "usernew@example.com"
 }
 
 ### REGISTER fail - ei mene validoinnista läpi
