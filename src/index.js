@@ -24,17 +24,18 @@ app.use(express.static('public'));
 // Uploaded media files
 app.use('/uploads', express.static('uploads'));
 
-// API documentation with pug
+// API DOCS website
+app.use('/api', express.static('doc'));
+
+// API documentation with pug - ei toimi - APIDOCS ajaa "päälle"
 //- http://localhost:3000/api
-app.get('/api', (req, res) => {
-  // res.render('<h1>Api DOC</h1>');
-  // rendaa index.pug
-  res.render('index', {
-    title: 'API PUG documentation',
-    message: 'Hello from index.js row 31',
-    // esimData: mediaItems,
-  });
-});
+// app.get('/api', (req, res) => {
+//   res.render('index', {
+//     title: 'API PUG documentation',
+//     message: 'Hello from index.js row 31',
+//     // esimData: mediaItems,
+//   });
+// });
 
 // USER AUTHERNTICATION ENDPOINT
 app.use('/api/auth', authRouter);
@@ -42,27 +43,12 @@ app.use('/api/auth', authRouter);
 // MEDIA ENDPOINT ROUTER
 app.use('/api/media/', mediaRouter);
 
-// TODO: TEE UUDET ENDPOINTIT USERLEILLE!!
+/**
+ *
+ */
 
 // USER ENDPOINT ROUTER
 app.use('/api/user', userRouter);
-
-// USERS
-
-// USERS ID
-// app.get('/api/user/:id', (req, res) => {
-//   getUserID(req, res);
-// });
-
-// ADD USER
-// app.post('/api/user', (req, res) => {
-//   addUser(req, res);
-// });
-
-// DELETE USER
-// app.delete('/api/user/:id', (req, res) => {
-//   delUser(req, res);
-// });
 
 // ERROR HANDLERIT
 // notFoundHandler toimii oletusreittinä

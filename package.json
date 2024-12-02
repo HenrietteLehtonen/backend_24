@@ -1,16 +1,25 @@
 {
-  "name": "esimerkki",
+  "name": "mediasharingapp",
   "version": "1.0.0",
-  "description": "esimerkki pohja",
+  "description": "API Documentation",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "docs": "apidoc"
   },
   "author": "",
   "license": "ISC",
+  "apidoc": {
+    "title": "My API docs",
+    "url": "https://example.com/api",
+    "order": [
+      "Authentication",
+      "User"
+    ]
+  },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "eslint": "^9.13.0",
@@ -20,6 +29,7 @@
     "prettier": "3.3.3"
   },
   "dependencies": {
+    "apidoc": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

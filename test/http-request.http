@@ -12,7 +12,7 @@ GET http://localhost:3000/api/user/2
 
 
 ### DELETE USER
-DELETE http://localhost:3000/api/user/5
+DELETE http://localhost:3000/api/user/10
 
 
 ### LOGIN
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ### Get USER INFO
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaWF0IjoxNzMzMTMwNzE4LCJleHAiOjE3MzMyMTcxMTh9.7z7dov78m2XvOADFOpItL25Yj4qVrDbK1IYygIVxaC0
 
 ### USER VALIDATION - auth routerin kautta
 ### REGISTER - Lisää uusi käyttäjä POST
@@ -35,9 +35,9 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "NewUser",
-    "password": "salasana",
-    "email": "user@example.com"
+    "username": "UusiKäyttäjä",
+    "password": "xxxxxxx",
+    "email": "useruusi@example.com"
 }
 
 ### REGISTER fail - ei mene validoinnista läpi
@@ -69,23 +69,23 @@ GET http://localhost:3000/api/media
 
 
 ### GET media by ID
-GET http://localhost:3000/api/media/2
+GET http://localhost:3000/api/media/0
 
 
 
 ### POST LISÄÄ UUS ITEMI Auth
 POST http://localhost:3000/api/media
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaWF0IjoxNzMzMTMwNzE4LCJleHAiOjE3MzMyMTcxMTh9.7z7dov78m2XvOADFOpItL25Yj4qVrDbK1IYygIVxaC0
 Content-Type: multipart/form-data; boundary=----Boundary
 
 ------Boundary
 Content-Disposition: form-data; name="title"
 
-Lisätty kuva autentikoinnilla
+Lisätty kuva post + autenntikointi
 ------Boundary
 Content-Disposition: form-data; name="description"
 
-Poistetaan tämä kuva 
+Filun decription
 ------Boundary
 Content-Disposition: form-data; name="file"; filename="image.jpg"
 Content-Type: image/png
@@ -95,13 +95,13 @@ Content-Type: image/png
 
 ### PUT MODIFY ITEM
 
-PUT http://localhost:3000/api/media/2
+PUT http://localhost:3000/api/media/22
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMSwiaWF0IjoxNzMyNjQwODcyLCJleHAiOjE3MzI3MjcyNzJ9.yqV93MuNiDQrVgK6C4GqaGNaNzjn5uG73hBkftGKCNo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaWF0IjoxNzMzMTMwNzE4LCJleHAiOjE3MzMyMTcxMTh9.7z7dov78m2XvOADFOpItL25Yj4qVrDbK1IYygIVxaC0
 
 {
   "title": "NEW TITLE FROM PUT with authorization",
-  "description": "Muokataan ja poistetaan tämä kuva kohta"
+  "description": "Item modified"
 }
 
 
